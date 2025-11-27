@@ -1,0 +1,341 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI",
+    sans-serif;
+  background: #000;
+  color: #f4f4f4;
+}
+
+:root {
+  --bg-dark: #000;
+  --bg-column: #131313;
+  --bg-task: #1f1f1f;
+  --bg-button: #262626;
+
+  --text-light: #fafafa;
+  --delete: #ff4d4d;
+  --accent: #23502d;
+
+  --radius-s: 6px;
+  --radius-m: 12px;
+
+  --padding-s: 6px;
+  --padding-m: 12px;
+  --padding-l: 18px;
+  --padding-xl: 28px;
+}
+
+nav {
+  padding: var(--padding-l) var(--padding-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav button {
+  background: var(--bg-button);
+  color: var(--text-light);
+  padding: var(--padding-m) var(--padding-l);
+  border: none;
+  border-radius: var(--radius-m);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+nav button:hover {
+  background: #3a3a3a;
+}
+
+section.board {
+  height: 100%;
+  padding: var(--padding-l) var(--padding-xl);
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+}
+
+.task-column {
+  flex: 1;
+  background: var(--bg-column);
+  padding: var(--padding-m);
+  border-radius: var(--radius-m);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 450px;
+  transition: 0.25s ease;
+  border: 1px solid #1c1c1c;
+}
+.task-column .heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #2b2b2b;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.task-column.hover-over {
+  border: 2px dashed var(--accent);
+  background: rgba(0, 255, 255, 0.08);
+  transform: scale(1.02);
+}
+
+.task {
+  background: var(--bg-task);
+  padding: var(--padding-m);
+  border-radius: var(--radius-m);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: grab;
+  user-select: none;
+  transition: 0.25s ease;
+}
+
+.task:hover {
+  background: #292929;
+}
+
+.task h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.task p {
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.task:active {
+  opacity: 0.6;
+  cursor: grabbing;
+}
+
+.task button {
+  align-self: flex-end;
+  padding: 5px 10px;
+  background: var(--delete);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  margin-top: 8px;
+  transition: 0.25s;
+}
+
+.task button:hover {
+  background: #ff2d2d;
+}
+
+.placeholder {
+  height: 65px;
+  background: rgba(100, 100, 100, 0.2);
+  border-radius: var(--radius-m);
+  border: 2px dashed #666;
+  margin-bottom: 10px;
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal .bg {
+  position: absolute;
+  inset: 0;
+  background: rgba(50, 50, 50, 0.45);
+  backdrop-filter: blur(5px);
+}
+
+.modal .center {
+  position: relative;
+  z-index: 20;
+  background: #1c1c1c;
+  padding: var(--padding-xl);
+  width: 350px;
+  border-radius: var(--radius-m);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Input + textarea */
+.modal .center input,
+.modal .center textarea {
+  background: var(--bg-task);
+  color: #fff;
+  padding: var(--padding-m);
+  font-size: 0.95rem;
+  border: 1px solid #444;
+  border-radius: var(--radius-m);
+  outline: none;
+  transition: 0.2s ease;
+}
+
+.modal .center textarea {
+  height: 100px;
+  resize: none;
+}
+
+.modal .center input:focus,
+.modal .center textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 10px #00eaff60;
+}
+
+/* Modal button */
+.modal .center button {
+  background: var(--bg-button);
+  color: var(--text-light);
+  font-weight: 600;
+  padding: var(--padding-m);
+  border: none;
+  border-radius: var(--radius-m);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.modal .center button:hover {
+  background: #00eaff60;
+}
+
+/* RESPONSIVE */
+/* Tablet*/
+@media (max-width: 1024px) {
+  nav {
+    padding: 12px 20px;
+  }
+
+  section.board {
+    gap: 20px;
+  }
+
+  .task-column {
+    min-height: 200px;
+  }
+
+  .modal .center {
+    width: 320px;
+    padding: var(--padding-l);
+  }
+}
+
+/* Large Mobile*/
+@media (max-width: 768px) {
+  nav {
+    padding: 15px 18px;
+  }
+
+  nav button {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+
+  section.board {
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 10px 18px;
+    gap: 20px;
+  }
+
+  .task-column {
+    width: 100%;
+    min-height: 160px;
+  }
+
+  .task {
+    padding: 10px;
+  }
+
+  .task h2 {
+    font-size: 1rem;
+  }
+
+  .task p {
+    font-size: 0.85rem;
+  }
+}
+
+/* Small Mobile*/
+@media (max-width: 480px) {
+  nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  nav button {
+    width: 100%;
+    text-align: center;
+  }
+
+  section.board {
+    gap: 15px;
+  }
+
+  .task-column {
+    padding: 10px;
+    min-height: 140px;
+  }
+
+  .task {
+    padding: 8px;
+  }
+
+  .task button {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+
+  .modal .center {
+    width: 260px;
+    padding: 20px;
+  }
+
+  .modal .center input,
+  .modal .center textarea {
+    font-size: 0.85rem;
+  }
+
+  .modal .center button {
+    padding: 8px 12px;
+  }
+}
+
+/* Super Small mobile*/
+@media (max-width: 360px) {
+  .task h2 {
+    font-size: 0.9rem;
+  }
+
+  .task p {
+    font-size: 0.75rem;
+  }
+}
+@media (max-width: 360px) {
+  .task h2 {
+    font-size: 0.9rem;
+  }
+
+  .task p {
+    font-size: 0.75rem;
+  }
+}
