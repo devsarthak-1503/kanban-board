@@ -56,7 +56,7 @@ Looks great on:
 2. Open `index.html` in your browser  
 3. Start adding tasks  
 4. Drag tasks between columns  
-5. Reload the page — your tasks will still be there 🎉
+5. Reload the page — your tasks will still be there
 
 ---
 
